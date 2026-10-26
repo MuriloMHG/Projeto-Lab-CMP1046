@@ -7,6 +7,8 @@
 #include <limits.h>
 #include <math.h>
 
+//FEITO PELOS ALUNOS: GABRIEL COELHO, MURILO HENRIQUE GOMES E VICTOR ROBERTI
+
 int atualizarPrestacao(void);
 int calcularCirculo(void);
 int calcularHipotenusa(void);
@@ -391,15 +393,18 @@ int LerOpcao(int limite)
         {
             getch();
         }
-        else if (tecla >= '0' && tecla <= '9')
+        else 
+        if (tecla >= '0' && tecla <= '9')
         {
             Opcao = tecla - '0';
         }
-        else if (tecla == 8)
+        else 
+        if (tecla == 8)
         {
             Opcao = -1;
         }
-        else if (tecla == 13)
+        else 
+        if (tecla == 13)
         {
             if (Opcao >= 1 && Opcao <= limite)
                 return Opcao;
