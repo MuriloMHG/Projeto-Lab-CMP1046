@@ -45,8 +45,6 @@ int atualizarPrestacao(void)
         printf("ATUALIZAR PRESTACAO DE VEICULO");
         gotoxy(42, 7);
         printf("ENTRADA");
-        gotoxy(16, 23);
-        printf("Apos o calculo: 5 - Menu anterior  6 - Menu principal");
 
         Mensagem("Informe o valor original. Use ponto para separar os centavos.");
         gotoxy(5, 9);
@@ -281,19 +279,17 @@ int FinalizarPrograma(void)
     gotoxy(3, 23);
     printf("OPCAO [  ]");
     gotoxy(16, 23);
-    printf("1-Repetir  5 - Retornar ao menu anterior  6 - Retornar ao menu principal");
-    Mensagem("Escolha 1 para repetir, 5 para o menu anterior ou 6 para o principal.");
+    printf("1-Repetir  2 - Retornar ao menu anterior  3 - Retornar ao menu principal");
+    Mensagem("Escolha 1 para repetir, 2 para o menu anterior ou 3 para o principal.");
 
-    do
-    {
-        opcao = LerOpcao(6);
-        if (opcao == 0)
-            opcao = 5;
-        if (opcao != 1 && opcao != 5 && opcao != 6)
-            Mensagem("Opcao invalida. Escolha 1, 5 ou 6 e pressione Enter.");
-    } while (opcao != 1 && opcao != 5 && opcao != 6);
+    opcao = LerOpcao(3);
 
-    return opcao;
+    if (opcao == 0)      
+        return 2;
+    if (opcao == 3)      
+        return 6;
+
+    return opcao;        
 }
 
 void gotoxy(int x, int y)
@@ -338,20 +334,22 @@ double LerNumero(int Col, int Lin, int inteiro)
     for (;;)
     {
         gotoxy(Col + tamanho, Lin);
-        tecla = getch();
+        tecla = _getch();
 
         if (tecla == 0 || tecla == 224)
         {
-            getch();
+            _getch();
         }
-        else if (tecla == 8 && tamanho > 0)
+        else
+         if (tecla == 8 && tamanho > 0)
         {
             tamanho--;
             texto[tamanho] = '\0';
             gotoxy(Col + tamanho, Lin);
             printf(" ");
         }
-        else if (tecla == 13)
+        else
+         if (tecla == 13)
         {
             numero = strtod(texto, NULL);
             if (numero > 0 && (!inteiro || numero <= INT_MAX))
@@ -359,7 +357,8 @@ double LerNumero(int Col, int Lin, int inteiro)
 
             Mensagem("Digite um numero positivo valido e pressione Enter.");
         }
-        else if (tamanho < 15 &&
+        else
+         if (tamanho < 15 &&
                  ((tecla >= '0' && tecla <= '9') ||
                   (!inteiro && tecla == '.' && strchr(texto, '.') == NULL)))
         {
@@ -384,27 +383,26 @@ int LerOpcao(int limite)
         else
             printf("  ]");
         gotoxy(10, 23);
-        tecla = getch();
+        tecla = _getch();
 
         if (tecla == 27)
             return 0;
 
         if (tecla == 0 || tecla == 224)
         {
-            getch();
+            _getch();
         }
-        else 
-        if (tecla >= '0' && tecla <= '9')
+        else if (tecla >= '0' && tecla <= '9')
         {
             Opcao = tecla - '0';
         }
-        else 
-        if (tecla == 8)
+        else
+         if (tecla == 8)
         {
             Opcao = -1;
         }
-        else 
-        if (tecla == 13)
+        else
+         if (tecla == 13)
         {
             if (Opcao >= 1 && Opcao <= limite)
                 return Opcao;
@@ -545,17 +543,17 @@ void menuPrincipal(void)
 
             case 2:
                 Mensagem("Estrutura condicional ainda nao foi feita. Pressione uma tecla.");
-                getch();
+                _getch();
                 break;
 
             case 3:
                 Mensagem("Estrutura de repeticao ainda nao foi feita. Pressione uma tecla.");
-                getch();
+                _getch();
                 break;
 
             case 4:
                 Mensagem("Variaveis compostas homogeneas ainda nao foram feitas. Pressione uma tecla.");
-                getch();
+                _getch();
                 break;
 
             case 5:
@@ -586,7 +584,7 @@ void menuSequencial(void)
         gotoxy(16, 23);
         printf("1-Figuras  2-Consumo  3-Prestacao  4-Anterior");
         Mensagem("Escolha 1, 2, 3 ou 4 e pressione Enter.");
-        Opcao = LerOpcao(5);
+        Opcao = LerOpcao(4);
 
         switch (Opcao)
         {
@@ -603,8 +601,6 @@ void menuSequencial(void)
                     return;
                 break;
             case 4:
-                Mensagem("Opcao invalida. Escolha 1, 2, 3 ou 4. Pressione uma tecla.");
-                getch();
                 break;
         }
     } while (Opcao != 4 && Opcao != 0);
@@ -619,8 +615,6 @@ void PrepararPrograma(const char *titulo)
     printf("ENTRADA");
     gotoxy(43, 13);
     printf("SAIDA");
-    gotoxy(16, 23);
-    printf("Apos o calculo: 5 - Menu anterior  6 - Menu principal");
     Mensagem("Digite valores positivos. Use ponto para decimais e confirme com Enter.");
 }
 
@@ -635,6 +629,3 @@ void TextoJanela(void)
     gotoxy(3, 23);
     printf("OPCAO [  ]");
 }
-
-
-
